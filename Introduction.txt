@@ -3,3 +3,7 @@
 
 * Function calling with the OpenAI API
 --------------------------------------
+Imagine if an AI system, could capture the input of a user, figure out what function to fire in your software, and then send the correct arguments to that function, all based on what 
+the user says.
+
+OPENAI API FUNCTION CALLING --> Is a core part of the service. 
