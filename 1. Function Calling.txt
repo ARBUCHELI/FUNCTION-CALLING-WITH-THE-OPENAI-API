@@ -1,0 +1,20 @@
+# 1. Function Calling
+---------------------
+
+* Understanding function calling with the OpenAI API
+----------------------------------------------------
+Large Language Models like ChatGPT are really chatty.  When you interact with the OpenAI API out of the box, you get a conversational exchange, similar to what you get with ChatGPT.
+
+This kind of approach is not very useful if you are trying to build software around the response, because the AI response is unstructured language and non-deterministic, meaning it'll
+be different every time.
+
+For software to work, we need predictable, structured, deterministic responses.
+
+Function calling unlocks this type of advanced integration between AI systems and your software.
+
+The developer determines what kinds of prompts should result in a function call with a structured data response, and what that structured data response should look like.
+
+The AI detects when such a prompt comes in, and provides the function response as specified.
+
+
+
