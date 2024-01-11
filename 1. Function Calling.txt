@@ -16,5 +16,9 @@ The developer determines what kinds of prompts should result in a function call 
 
 The AI detects when such a prompt comes in, and provides the function response as specified.
 
+API KEY: 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
+
+
+
 
 
