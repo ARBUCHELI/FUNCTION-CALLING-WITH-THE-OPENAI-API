@@ -19,6 +19,133 @@ The AI detects when such a prompt comes in, and provides the function response a
 API KEY: 
 
 
+Example of function:
+--------------------
+
+02-basic-function-call.http --> The function is written in the file, but is called from a JavaScript file.
+---------------------------
+POST https://api.openai.com/v1/chat/completions
+content-type: application/json
+Authorization: Bearer {{key}}
+
+{
+  "model": "gpt-3.5-turbo",
+  "messages": [
+    {
+      "role": "user",
+      "content": "What's the weather like in Burnaby?"
+    }
+  ],
+  "functions": [  --> HERE THE FUNCTION IS CONFIGURED
+    {
+      "name": "weatherQuery",
+      "description": "Get the current weather in a given location",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "location": {
+            "type": "string",
+            "description": "If US: 'New York,NY,US'. else: 'london,UK'. Use ISO-3166"
+          },
+          "unit": {
+            "type": "string",
+            "description": "location unit: metric or imperial."
+          }
+        },
+        "required": [
+          "location",
+          "unit"
+        ]
+      }
+    }
+  ],
+  "function_call": "auto"
+}
+
+In the function call in the http file, i get to define whatever data structure I want, an array, an object, etc, and I can control the properties I want.
+
+Example of a multifunction call
+-------------------------------
+
+03-multi-function-call.http
+---------------------------
+POST https://api.openai.com/v1/chat/completions
+content-type: application/json
+Authorization: Bearer {{key}}
+
+{
+  "model": "gpt-3.5-turbo",
+  "messages": [
+    {
+      "role": "user",
+      "content": "How many ducks fit in a pond?"
+    }
+  ],
+  "functions": [
+    {
+      "name": "locationQuery",
+      "description": "Get the current weather in a given location",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "location": {
+            "type": "string",
+            "description": "If US: 'New York,NY,US'. else: 'london,UK'. Use ISO-3166"
+          },
+          "unit": {
+            "type": "string",
+            "description": "location unit: metric or imperial."
+          }
+        },
+        "required": [
+          "location",
+          "unit"
+        ]
+      }
+    },
+    {
+      "name": "authorQuery",
+      "description": "Information about an author.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "firstname": {
+            "type": "string",
+            "description": "First name of author."
+          },
+          "lastname": {
+            "type": "string",
+            "description": "Last name of author."
+          }
+        },
+        "required": [
+          "firstname",
+          "lastname"
+        ]
+      }
+    }
+  ],
+  "function_call": {"name": "authorQuery"}
+}
+
+In the example, the description can be considered as the system message for the function. --> This helps the system to define which function is going to be called.
+
+* Conclusion
+------------
+USING FUNCTION CALLS YOU CAN NOW SET UP QUITE ADVANCED SYSTEMS THAT CAN TAKE HUMAN LANGUAGE INPUT AND THEN IDENTIFY WHAT TYPE OF QUESTION THE USER IS ASKING AND THEN SHUNT OFF QUERIES TO
+YOUR SOFTWARE BASED ON THOSE QUESTIONS.
+
+YOU CAN DEFINE NOT ONLY WHEN A SPECIFIC QUERY IS CALLED, BUT ALSO WHAT PARAMETERS ARE PASSED ON WITH THAT FUNCTION CALL FOR EACH INDIVIDUAL CALL.
+
+"function_call": "auto" --> Controls what ChatGPT does, when there is a function call present.
+
+
+"function_call": "none" --> For example this means, never using function calls.
+
+ "function_call": {"name": "authorQuery"} --> For example always will call authorQuery.
+
+
+
 
 
 
